@@ -15,9 +15,7 @@ Penelitian ini mengembangkan sistem prediksi pengeluaran bulanan berbasis machin
 - [3. Dataset & Preprocessing](#3-dataset--preprocessing)
 - [4. Pipeline Pembelajaran](#4-pipeline-pembelajaran)
 - [5. Hasil Eksperimen & Perbandingan Model](#5-hasil-eksperimen--perbandingan-model)
-- [6. Daftar Gambar Visualisasi Utama](#6-daftar-gambar-visualisasi-utama)
-- [7. Deployment Aplikasi Streamlit](#7-deployment-aplikasi-streamlit)
-- [8. Referensi](#8-referensi)
+- [6. Deployment Aplikasi Streamlit](#7-deployment-aplikasi-streamlit)
 
 ---
 
@@ -145,6 +143,15 @@ Untuk menjaga kerapian dan kemudahan navigasi, workspace proyek telah ditata ke 
 
 ## 4. Pipeline Pembelajaran
 
+Secara garis besar, alur pemrosesan data terbagi menjadi enam tahapan:
+
+1. **Feature Engineering** - Agregasi kategori pengeluaran menjadi target.
+2. **Preprocessing** - Penanganan nilai hilang, One-Hot Encoding, StandardScaler.
+3. **Train-Validation-Test Split** - 70% training, 15% validasi, 15% testing.
+4. **Model Training** - Linear Regression, Random Forest, XGBoost.
+5. **Hyperparameter Tuning** - GridSearchCV 5-fold, parameter optimal ditemukan.
+6. **Evaluasi** - R², MAE, RMSE, SHAP Analysis.
+
 ---
 
 ## 5. Hasil Eksperimen & Perbandingan Model
@@ -167,33 +174,11 @@ Untuk menjaga kerapian dan kemudahan navigasi, workspace proyek telah ditata ke 
 4. **savings_rate** : 6.7% (Berpengaruh Sedang)
 5. **financial_health** : 5.4% (Berpengaruh Rendah)
 
-**Interpretasi:**
-- Pendapatan adalah prediktor paling kuat untuk pengeluaran
-- Utang dan usia juga sangat mempengaruhi pola pengeluaran
-- Kebiasaan menabung mempengaruhi pengeluaran secara tidak langsung
+**Interpretasi:** Pendapatan adalah prediktor paling dominan. Utang, usia, dan kebiasaan menabung juga memberikan pengaruh signifikan terhadap pengeluaran.
 
 ---
 
-## 6. Daftar Gambar Visualisasi Utama
-
-Proyek ini menghasilkan visualisasi pembuktian yang disertakan dalam artikel ilmiah:
-
-| Gambar | Deskripsi |
-|--------|-----------|
-| `spending_distribution.png` (Figure 1) | Histogram distribusi total pengeluaran bulanan |
-| `income_vs_spending.png` (Figure 2) | Scatter plot hubungan pendapatan vs pengeluaran |
-| `category_spending.png` (Figure 3) | Bar chart rata-rata pengeluaran per kategori |
-| `gender_comparison.png` (Figure 4) | Boxplot perbandingan pengeluaran berdasarkan gender |
-| `correlation_heatmap.png` (Figure 5) | Heatmap korelasi antar fitur |
-| `model_comparison.png` (Figure 6) | Bar chart perbandingan performa 3 model |
-| `prediction_scatter.png` (Figure 7) | Scatter plot prediksi vs aktual |
-| `residual_plot.png` (Figure 8) | Residual plot untuk analisis error |
-| `feature_importance.png` (Figure 9) | Feature importance Top 15 |
-| `shap_summary.png` (Figure 10) | SHAP summary plot interpretasi |
-
----
-
-## 7. Deployment Aplikasi Streamlit
+## 6. Deployment Aplikasi Streamlit
 
 Aplikasi GUI web dapat dijalankan secara lokal dengan mengetikkan perintah berikut pada terminal:
 
