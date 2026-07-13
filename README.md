@@ -1,56 +1,113 @@
-# Prediksi Pengeluaran Bulanan: Pendekatan Supervised Learning untuk Analisis Keuangan Personal
+# Prediksi Pengeluaran Bulanan Berbasis Machine Learning untuk Analisis Kesehatan Finansial Personal
 
-Proyek ini bertujuan untuk memprediksi total pengeluaran bulanan seseorang berdasarkan karakteristik demografi dan finansial menggunakan pendekatan pembelajaran terstruktur (Supervised Learning Pipeline). Sistem ini dirancang untuk membantu individu memahami pola pengeluaran mereka, mengevaluasi kesehatan keuangan, dan mendapatkan rekomendasi personal untuk perbaikan keuangan di masa depan.
+Penelitian ini mengembangkan sistem prediksi pengeluaran bulanan berbasis machine learning dengan memanfaatkan data demografi dan parameter finansial individu. Pendekatan supervised learning diterapkan untuk mengestimasi besaran pengeluaran secara objektif, sekaligus memberikan evaluasi kesehatan keuangan melalui skor komposit yang terukur. Sistem ini diharapkan dapat meningkatkan literasi keuangan masyarakat melalui rekomendasi personal yang adaptif terhadap profil pengguna.
 
 ---
 
 ## Daftar Isi
 
-- [1. Struktur Direktori Proyek](#1-struktur-direktori-proyek)
-- [2. Formulasi Permasalahan & Ringkasan Akademik](#2-formulasi-permasalahan--ringkasan-akademik)
-  - [2.1 Judul Jurnal Utama](#21-judul-jurnal-utama)
-  - [2.2 Latar Belakang (Context)](#22-latar-belakang-context)
-  - [2.3 Rumusan Masalah](#23-rumusan-masalah)
+- [1. Pendahuluan & Tinjauan Pustaka](#1-pendahuluan--tinjauan-pustaka)
+  - [1.1 Latar Belakang](#11-latar-belakang)
+  - [1.2 Penelitian Terkait & Research Gap](#12-penelitian-terkait--research-gap)
+  - [1.3 Rumusan Masalah](#13-rumusan-masalah)
+  - [1.4 Tujuan & Manfaat](#14-tujuan--manfaat)
+- [2. Struktur Direktori Proyek](#2-struktur-direktori-proyek)
 - [3. Dataset & Preprocessing](#3-dataset--preprocessing)
-  - [3.1 Profil Data](#31-profil-data)
-  - [3.2 Fitur Dataset](#32-fitur-dataset)
 - [4. Pipeline Pembelajaran](#4-pipeline-pembelajaran)
 - [5. Hasil Eksperimen & Perbandingan Model](#5-hasil-eksperimen--perbandingan-model)
-  - [5.1 Evaluasi Performa Model (Supervised)](#51-evaluasi-performa-model-supervised)
-  - [5.2 Analisis Feature Importance](#52-analisis-feature-importance)
 - [6. Daftar Gambar Visualisasi Utama](#6-daftar-gambar-visualisasi-utama)
 - [7. Deployment Aplikasi Streamlit](#7-deployment-aplikasi-streamlit)
+- [8. Referensi](#8-referensi)
 
 ---
 
-## 1. Struktur Direktori Proyek
+## 1. Pendahuluan & Tinjauan Pustaka
+
+### 1.1 Latar Belakang
+
+Pemahaman terhadap pola pengeluaran merupakan prasyarat fundamental dalam perencanaan keuangan personal. Namun, pendekatan konvensional yang mengandalkan pencatatan manual rentan terhadap kesalahan dan bias kognitif. Mayoritas masyarakat Indonesia belum memiliki sistem pencatatan keuangan terstruktur, berdampak pada konsumsi berlebih, akumulasi utang, dan ketiadaan dana darurat. Oleh karena itu, diperlukan pendekatan berbasis data yang mampu memberikan gambaran objektif mengenai kondisi keuangan individu secara real-time.
+
+### 1.2 Penelitian Terkait & Research Gap
+
+**Penelitian Terkait (State of the Art):**
+
+| Peneliti (Tahun) | Judul/Topik | Metode | Hasil |
+|------------------|-------------|--------|-------|
+| Chen et al. (2023) | Prediksi kesehatan finansial korporasi | LightGBM, Random Forest, LASSO | Akurasi >90% |
+| Zhang & Lee (2022) | Prediksi pengeluaran pribadi | Linear Regression, Decision Tree, Random Forest | R² terbaik 0.89 |
+| Kumar et al. (2023) | AI-Powered Financial Budgeting | Machine Learning, Kategorisasi | Akurasi 85% |
+| Wang et al. (2022) | FinSight AI: Financial Health Scoring | Deep Learning | Skor 0-100 |
+
+**Research Gap yang Diidentifikasi:**
+
+| No | Research Gap | Penjelasan |
+|----|--------------|------------|
+| 1 | **Integrasi Fungsi** | Sebagian besar penelitian fokus pada satu aspek (prediksi atau evaluasi), belum terintegrasi. |
+| 2 | **Pendekatan Objektif** | Masih bergantung pada data laporan diri (self-reported) yang rentan bias. |
+| 3 | **Interpretabilitas** | Model "kotak hitam" tanpa interpretasi yang memadai. |
+| 4 | **Konteks Lokal** | Sebagian besar penelitian dilakukan di negara maju. |
+
+**Novelti (Kebaruan) Penelitian:**
+
+1. **Integrasi Prediksi & Evaluasi** - Menggabungkan prediksi pengeluaran dan skor kesehatan finansial dalam satu sistem.
+2. **Pendekatan Objektif** - Menggunakan dataset transaksional (10.000 records) untuk estimasi lebih akurat.
+3. **Interpretabilitas** - Penerapan analisis SHAP untuk mengidentifikasi fitur paling berpengaruh.
+4. **Konteks Indonesia** - Aplikasi web dengan data wilayah Indonesia dan tampilan Rupiah.
+5. **Rekomendasi Personal** - Saran spesifik berdasarkan analisis komponen keuangan.
+
+### 1.3 Rumusan Masalah
+
+Berdasarkan latar belakang dan identifikasi research gap, permasalahan utama yang menjadi fokus penelitian:
+
+| No | Masalah | Dampak |
+|----|---------|--------|
+| 1 | **Kurangnya Kesadaran Finansial** | Individu tidak memahami pola pengeluaran objektif |
+| 2 | **Tidak Ada Tolok Ukur Objektif** | Belum ada standar mengukur kesehatan keuangan |
+| 3 | **Kurangnya Personalisasi** | Rekomendasi keuangan bersifat generik |
+| 4 | **Ambiguity Perencanaan** | Tidak ada target menabung 
+
+### 1.4 Tujuan & Manfaat
+
+**Tujuan:**
+
+1. Memprediksi pengeluaran bulanan berbasis demografi dan finansial menggunakan XGBoost.
+2. Menghitung skor kesehatan finansial otomatis (0-100) dari 4 komponen.
+3. Memberikan rekomendasi personal untuk perbaikan keuangan.
+
+**Manfaat:**
+
+1. **Edukasi Keuangan** - Meningkatkan literasi keuangan masyarakat.
+2. **Perencanaan Anggaran** - Membantu perencanaan keuangan yang lebih baik.
+3. **Peringatan Dini** - Mendeteksi potensi pengeluaran berlebih.
+
+---
+
+## 2. Struktur Direktori Proyek
 
 Untuk menjaga kerapian dan kemudahan navigasi, workspace proyek telah ditata ke dalam struktur berikut:
 
----
-
-## 2. Formulasi Permasalahan & Ringkasan Akademik
-
-### 2.1 Judul Jurnal Utama
-
-**"Prediksi Pengeluaran Bulanan Berbasis Machine Learning: Pendekatan Supervised Learning untuk Analisis Keuangan Personal"**
-
-### 2.2 Latar Belakang (Context)
-
-Dalam literasi keuangan personal, pemahaman terhadap pola pengeluaran merupakan fondasi utama untuk perencanaan keuangan yang sehat. Pendekatan konvensional mengandalkan pencatatan manual yang rentan terhadap kesalahan dan bias subjektif. Berdasarkan data, lebih dari 60% masyarakat Indonesia tidak memiliki catatan pengeluaran bulanan yang terstruktur, yang berdampak pada:
-
-- **Rendahnya tingkat literasi keuangan** - Masyarakat tidak memahami pola pengeluaran mereka secara objektif
-- **Tingginya angka utang konsumtif** - Pengeluaran melebihi pendapatan tanpa disadari
-- **Kurangnya perencanaan masa depan** - Tidak ada dana darurat atau investasi
-
-Sistem prediksi pengeluaran berbasis machine learning hadir sebagai solusi dengan pendekatan objektif berbasis data. Sistem ini menggunakan model supervised learning yang telah dilatih dengan ribuan data historis untuk mengidentifikasi pola hubungan antara karakteristik demografi, perilaku finansial, dan besaran pengeluaran bulanan.
-
-### 2.3 Rumusan Masalah
-
-1. **Kurangnya Kesadaran Finansial** - Individu tidak mengetahui pola pengeluaran objektif, sehingga kesulitan merencanakan anggaran.
-2. **Ketiadaan Alat Ukur Kesehatan Finansial** - Tidak ada standar untuk menilai kondisi keuangan secara objektif.
-3. **Tidak Ada Rekomendasi Personal** - Saran keuangan bersifat umum dan tidak spesifik, sehingga perbaikan keuangan tidak terarah.
-4. **Target Keuangan Tidak Jelas** - Tidak ada panduan menabung yang realistis dan terukur.
+```
+├── Data/                          # Dataset
+│   ├── raw/                       # Data mentah
+│   │   └── personal_spending_dataset.csv
+│   └── processed/                 # Data setelah preprocessing
+│       └── spending_processed.csv
+│
+├── notebooks/                     
+│   ├── 01_eda.ipynb               # Exploratory Data Analysis
+│   └── 02_modeling.ipynb          # Modeling & Evaluation
+│
+├── models/                      
+│   ├── best_model.pkl             # Model terbaik (XGBoost)
+│   └── preprocessor.pkl           # Pipeline preprocessing
+│
+├── app/                           # Aplikasi Streamlit
+│   └── app.py                     # Aplikasi web interaktif
+│
+├── requirements.txt               # Dependencies
+├── README.md                      
+└── .gitignore                     
+```
 
 ---
 
