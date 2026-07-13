@@ -1,4 +1,4 @@
-# Prediksi Pengeluaran Bulanan Berbasis Machine Learning untuk Analisis Kesehatan Finansial Personal
+# Prediksi Pengeluaran Bulanan Menggunakan XGBoost untuk Evaluasi Kesehatan Finansial
 
 Penelitian ini mengembangkan sistem prediksi pengeluaran bulanan berbasis machine learning dengan memanfaatkan data demografi dan parameter finansial individu. Pendekatan supervised learning diterapkan untuk mengestimasi besaran pengeluaran secara objektif, sekaligus memberikan evaluasi kesehatan keuangan melalui skor komposit yang terukur. Sistem ini diharapkan dapat meningkatkan literasi keuangan masyarakat melalui rekomendasi personal yang adaptif terhadap profil pengguna.
 
